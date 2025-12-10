@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>918326420126-4f5e68f9cvphmtnfeh920no4evd9hk4b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.918326420126-4f5e68f9cvphmtnfeh920no4evd9hk4b</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>918326420126-7sjnehgqfhh4uo36ik4jjkm6l3l9hsva.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAfQeks7OSXxWTT5rgCXZwnYCd380a24wE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>918326420126</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.PacificStore</string>
+	<key>PROJECT_ID</key>
+	<string>pacificstore-5eb1b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pacificstore-5eb1b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:918326420126:ios:44f88b8945ef77e3</string>
+	<key>DATABASE_URL</key>
+	<string>https://pacificstore-5eb1b.firebaseio.com</string>
+</dict>
+</plist>

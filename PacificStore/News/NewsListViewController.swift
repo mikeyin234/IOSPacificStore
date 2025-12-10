@@ -1,0 +1,322 @@
+//
+//  NewsListViewController.swift
+//  PacificStore
+//
+//  Created by 尹竑翰 on 2019/3/6.
+//  Copyright © 2019 greatsoft. All rights reserved.
+//
+
+import UIKit
+
+class NewsListViewController: BaseViewController , UITableViewDelegate,UITableViewDataSource {
+    
+    
+    var m_ListTitleInfo:[NSDictionary] =  [];
+    var m_ListDetailInfo:[NSDictionary] =  [];
+    
+     var m_imageCache  = NSMutableDictionary();
+    
+    @IBOutlet weak var mTableview: UITableView!
+    let   TITLE_WIDTH:CGFloat  =  120.0;
+    
+    var    BUTTON_TYPE =  0;
+    
+    
+     @IBOutlet weak var mScrollView: UIScrollView!
+    
+      var   m_buttonObject:[UIButton] = [];
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return  m_ListDetailInfo.count;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        var Mycell:NewsTableViewCell!;
+        
+        let cell: NewsTableViewCell = NewsTableViewCell(style: .default, reuseIdentifier: "Imagecell")
+        
+        cell.m_labelText.text  = m_ListDetailInfo[indexPath.row].object(forKey:"Name") as! String;
+        
+      
+       
+        
+        
+        let url = URL(string:m_ListDetailInfo[indexPath.row].object(forKey:"ImageName")as! String);
+        
+        if  let cachedImage = m_imageCache.object(forKey: url!.absoluteString as NSString)
+        {
+            cell.m_imageView.image = (cachedImage as! UIImage)
+        }else
+        {
+            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
+            if(data != nil)
+            {
+               let image = UIImage(data: data!)!
+               m_imageCache.setObject(image, forKey: url!.absoluteString as NSString)
+               cell.m_imageView.image = image
+            }
+        }
+        
+        cell.m_labelText.font = UIFont.systemFont(ofSize: 20.0);
+        
+        
+        let strYoutube  = m_ListDetailInfo[indexPath.row].object(forKey: "YoutubeID") as! String
+        if(strYoutube.count>0)
+        {
+             cell.m_imagePlayView.image = UIImage(named: "VideoView");
+             cell.m_imagePlayView.isHidden = false;            
+        }else
+        {
+             cell.m_imagePlayView.isHidden = true;
+        }
+        
+        
+        Mycell = cell;
+        
+        return Mycell
+        
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        MBProgressHUDObjC.showHUDAdded(to: self.view, animated: true)
+        DCUpdater.shared()?.getNewsTypes();
+        
+    }
+    
+    
+    @objc func didGetNewTypesResult(notification: NSNotification){
+        
+        //do stuff
+        let userInfo = notification.userInfo as NSDictionary?;
+        let strSuccess = userInfo?.object(forKey: "isSuccess") as! NSString
+        
+        if(strSuccess.isEqual(to: "YES"))
+        {
+            let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
+            let  strCode = dic.object(forKey: "ReturnCode") as! String;
+            
+            if(Int(strCode) == 0)
+            {                
+                let DataArray = dic.object(forKey: "Data") as! NSArray;
+                
+                var i = 0;
+                for DataDic  in DataArray
+                {
+                    let dicData  = DataDic as! NSDictionary
+                    m_ListTitleInfo.append(dicData)
+                    
+                    let strTypeName  =  dicData.object(forKey: "TypeName") as! String;
+                    
+                    AddButtonToScrollView(strTitle: strTypeName,iIndex: i)
+                    
+                    i += 1;
+                }
+                
+                let fWidth  =  TITLE_WIDTH * CGFloat(m_ListTitleInfo.count);
+                self.mScrollView.contentSize = CGSize(width: fWidth, height: self.mScrollView.frame.size.height)
+                
+                if(i>0)
+                {
+                   let idType = m_ListTitleInfo[0].object(forKey: "id") as! String
+                   DCUpdater.shared()?.getNewsDetail(idType);
+                    
+                }
+            }else
+            {
+                ShowAlertControl(Message:  dic.object(forKey: "ReturnMessage") as! String);
+            }
+        }else
+        {
+            ShowAlertControl(Message: "您的網路連線不通，請檢查您的網路狀態，或至網路通暢的環境下使用");
+        }
+    }
+    
+    
+    
+    
+    override  func viewWillDisappear(_ animated: Bool) {
+        
+        NotificationCenter.default.removeObserver(self)
+        
+        RemoveTitleBar()
+        
+        
+//===============================================================//
+        self.stopTimeTick();
+        
+        DCUpdater.shared()?.addAppClickLog(Int32(self.TYPE_FOOD), andDuration: Int32(self.durationSeconds()), andFunctionCount: 1, andAccessToken: ConfigInfo.m_strAccessToken);
+        
+        
+    }
+    
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+    
+    @IBAction func onBackClick(_ sender:UIButton)
+    {
+        self.navigationController?.popViewController(animated: true);
+    }
+    
+    
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return CGFloat(NewsTableViewCell.MainHeight);
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        let strName = m_ListDetailInfo[indexPath.row].object(forKey: "Name");
+        let strWebPage = m_ListDetailInfo[indexPath.row].object(forKey: "WebPage");
+        //let strMP4File  =  m_ListDetailInfo[indexPath.row].object(forKey: "VideoPath") as! String;
+        
+        let strYoutubeFile  =  m_ListDetailInfo[indexPath.row].object(forKey: "YoutubeID") as! String;
+        
+        onGotoFoodDetailBrand(strName: strName as! String,strWebpage: strWebPage as! String,strYoutubeID: strYoutubeFile);
+    }
+    
+    func onGotoFoodDetailBrand(strName:String,strWebpage:String
+                              ,strYoutubeID:String) {
+        
+        let  StoryBoard = UIStoryboard(name: "Main" , bundle: nil)
+        
+        let  btNewsDetail
+            = StoryBoard.instantiateViewController(withIdentifier: "NewsDetail") as!  NewsDetailViewController;
+        
+        btNewsDetail.m_WebPage  =  strWebpage;
+        btNewsDetail.m_strTitle = m_ListTitleInfo[BUTTON_TYPE].object(forKey: "TypeName") as! String
+        
+        btNewsDetail.m_strYoutubeFile  =  strYoutubeID;
+        
+        
+        btNewsDetail.m_strSubTitle  = strName;
+        self.navigationController?.pushViewController(btNewsDetail, animated: true)
+        
+    }
+    
+    
+    override func  viewWillAppear(_ animated: Bool) {
+        
+        
+        mScrollView.showsHorizontalScrollIndicator = false;
+        SetTitleColor()
+        NotificationCenter.default.addObserver(self, selector:#selector(didGetNewTypesResult), name:NSNotification.Name(rawValue: kDCGetNewsTypes), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(didGetNewsDetailResult), name:NSNotification.Name(rawValue: kDCGetNewsDetail), object: nil)
+        
+        
+        self.startTimeTick();
+        
+    }
+    
+    
+    func AddButtonToScrollView(strTitle:String,iIndex:Int)
+    {
+        //put your code here
+        let iLeft = CGFloat(iIndex) * TITLE_WIDTH;
+        
+        let button = UIButton.init(frame: CGRect(x: iLeft, y: 0, width: TITLE_WIDTH, height: self.mScrollView.frame.size.height))
+        
+        button.setTitle(strTitle, for: UIControl.State.normal)
+        button.tag = iIndex;        
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20.0);
+        
+        // button.addTarget(self, action: #selector.SelectFoodType(_:)), for: .touchUpInside)
+        
+        button.addTarget(self, action: #selector(SelectFoodType), for: .touchUpInside)
+        
+        if(iIndex != 0 )
+        {
+            button.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        }
+        
+        m_buttonObject.append(button)
+        
+        self.mScrollView.addSubview(button);
+        
+        
+    }
+    
+    
+    
+    
+    @objc func SelectFoodType(sender: UIButton){
+        
+        for button in m_buttonObject {
+            button.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        }
+        
+        BUTTON_TYPE  = sender.tag;
+        
+        
+        sender.setTitleColor(UIColor.white, for: UIControl.State.normal)
+        
+        let idType = m_ListTitleInfo[BUTTON_TYPE].object(forKey: "id") as! String
+        
+        MBProgressHUDObjC.showHUDAdded(to: self.view, animated: true)
+        
+        DCUpdater.shared()?.getNewsDetail(idType);
+        
+        //mTableview.reloadData();
+    }
+    
+    
+    @objc func didGetNewsDetailResult(notification: NSNotification){
+        
+        //do stuff
+        let userInfo = notification.userInfo as NSDictionary?;
+        let strSuccess = userInfo?.object(forKey: "isSuccess") as! NSString
+        
+        MBProgressHUDObjC.hideHUD(for: self.view, animated: true)
+        
+        if(strSuccess.isEqual(to: "YES"))
+        {
+            let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
+            let  strCode = dic.object(forKey: "ReturnCode") as! String;
+            
+            m_ListDetailInfo.removeAll();
+            m_imageCache.removeAllObjects();
+            
+            if(Int(strCode) == 0)
+            {
+                let DataArray = dic.object(forKey: "Data") as! NSArray;
+                
+                for DataDic  in DataArray
+                {
+                    let dicData  = DataDic as! NSDictionary
+                    m_ListDetailInfo.append(dicData)
+                }
+                
+                mTableview.reloadData();
+            }else
+            {
+                mTableview.reloadData();
+                ShowAlertControl(Message:  dic.object(forKey: "ReturnMessage") as! String);
+            }
+        }else
+        {
+            ShowAlertControl(Message: "您的網路連線不通，請檢查您的網路狀態，或至網路通暢的環境下使用");
+        }
+    }
+    
+    
+    
+}

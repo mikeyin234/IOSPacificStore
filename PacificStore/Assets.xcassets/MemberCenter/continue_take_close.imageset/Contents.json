@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "發票補登-連續拍攝-關1080.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "發票補登-連續拍攝-關1620.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "發票補登-連續拍攝-關2160.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "提醒視窗_結束1080.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "提醒視窗_結束1620.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "提醒視窗_結束2160.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
