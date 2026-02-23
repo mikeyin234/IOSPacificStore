@@ -96,8 +96,11 @@ class NavMainViewController: BaseViewController , UITableViewDelegate,UITableVie
                     // IMPORTANT: Update UI on the main thread
                     DispatchQueue.main.async { [weak imageView = cell.m_imageView] in
                         
-                        self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
-                        imageView?.image = image!
+                        if( image != nil)
+                        {
+                            self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
+                            imageView?.image = image!                        
+                        }
                     }
                 }
                 

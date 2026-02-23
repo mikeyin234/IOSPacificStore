@@ -30,8 +30,13 @@ class MySessionDelegate: NSObject, URLSessionDelegate {
 
 
 extension UIImageView {
+    
+    
     func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         contentMode = mode
+        
+        
+        
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -44,6 +49,8 @@ extension UIImageView {
             }
         }.resume()
     }
+    
+    
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         downloaded(from: url, contentMode: mode)
@@ -662,6 +669,7 @@ class BaseViewController: UIViewController {
             return
         }
         
+        
         let delegate = MySessionDelegate()
         let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
         
@@ -698,6 +706,42 @@ class BaseViewController: UIViewController {
             }
         }
     }
+    
+    
+    func downloadImage(from url: URL) async throws -> UIImage {
+        // Use try await to pause execution until the data is downloaded
+        
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        
+        // Check if the data can be converted to a UIImage
+        guard let image = UIImage(data: data) else {
+            throw NSError(domain: "InvalidImageDataError", code: 0, userInfo: nil)
+        }
+        
+        // Return the image
+        return image
+    }
+
+    // Example usage in an async context, such as a Task or another async function:
+    func loadImage() async {
+        do {
+            let imageURL = URL(string: "https://picsum.photos/200/300")!
+            let image = try await downloadImage(from: imageURL)
+            
+            // Update UI on the main thread (UIKit updates must be on main)
+            DispatchQueue.main.async {
+                // e.g., self.imageView.image = image
+                print("Image downloaded and set")
+            }
+        } catch {
+            // Handle any errors during download or image creation
+            print("Error downloading image: \(error)")
+        }
+    }
+    
+    
+    
     
     
     

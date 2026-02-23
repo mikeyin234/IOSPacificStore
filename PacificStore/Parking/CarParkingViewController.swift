@@ -12,7 +12,7 @@ import WebKit
 
 
 
-class CarParkingViewController: BaseViewController,WKUIDelegate {
+class CarParkingViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate {
 
     @IBOutlet weak var mMapView: GMSMapView!
     var   m_PolicyWebView : WKWebView!
@@ -72,6 +72,23 @@ class CarParkingViewController: BaseViewController,WKUIDelegate {
     */
 
     
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
+    
     @IBAction func onBackClick(_ sender:UIButton)
     {
         self.navigationController?.popViewController(animated: true);
@@ -100,6 +117,8 @@ class CarParkingViewController: BaseViewController,WKUIDelegate {
         m_PolicyWebView = WKWebView(frame:   poliwebFrame, configuration: webConfiguration)
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate = self
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }

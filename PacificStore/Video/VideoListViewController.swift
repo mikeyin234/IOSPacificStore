@@ -94,13 +94,24 @@ class VideoListViewController: BaseViewController  , UITableViewDelegate,UITable
             Mycell.m_imageView.image = (cachedImage as! UIImage)
         }else
         {
+            
+            fetchImage(from: url!.absoluteString) { image in
+                // IMPORTANT: Update UI on the main thread
+                DispatchQueue.main.async { [weak imageView = Mycell.m_imageView] in
+                    
+                    self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
+                    imageView?.image = image!
+                }
+            }
+            
+            /*
             let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
             if(data != nil)
             {
                  let image = UIImage(data: data!)!
                  m_imageCache.setObject(image, forKey: url!.absoluteString as NSString)
                  Mycell.m_imageView.image = image
-             }
+             }*/
          }
         
         Mycell.m_labelText.font = UIFont.systemFont(ofSize: 20.0);

@@ -18,6 +18,7 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
    
      var m_imageCache  = NSMutableDictionary();
     
+    var m_ImageDownloadIndex:[Int] =  [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,6 +127,8 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
             self.mPageControl.numberOfPages  = 0;
             
             
+            m_ImageDownloadIndex.removeAll()
+            
             if(Int(strCode) == 0)
             {               
                 let DataArray = dic.object(forKey: "Data") as! NSArray;
@@ -135,17 +138,23 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
                 {
                     let dicData  = DataDic as! NSDictionary
                     m_ListTitleInfo.append(dicData)
-                    
                     let  imageName = dicData.object(forKey: "ImageName");
                     let url = URL(string:imageName as! String);
+                    m_ImageDownloadIndex.append(i)
                     
-                    let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
-                    let image = UIImage(data: data!)!
                     
-                    self.AddImageToScrollView(image: image,iIndex: i);
-                    
+                    fetchImage(from: url!.absoluteString) { image in
+                        // IMPORTANT: Update UI on the main thread
+                        DispatchQueue.main.async { [index =  self.m_ImageDownloadIndex[0]] in
+                            self.AddImageToScrollView(image: image!,iIndex: index);
+                            self.m_ImageDownloadIndex.remove(at: 0)
+                        }
+                    }
+            
                     i += 1;
                 }
+                
+                
                 
                 self.mPageControl.numberOfPages  = m_ListTitleInfo.count;
                 

@@ -11,7 +11,7 @@ import WebKit
 
 
 
-class AboutUsViewController: BaseViewController,WKUIDelegate {
+class AboutUsViewController: BaseViewController,WKNavigationDelegate,WKUIDelegate {
     
     var   m_AboutWebView : WKWebView!
     
@@ -35,9 +35,28 @@ class AboutUsViewController: BaseViewController,WKUIDelegate {
                                     configuration: WKWebViewConfiguration())
         
         m_AboutWebView.uiDelegate = self
+        m_AboutWebView.navigationDelegate = self
+        
         m_ViewContent.addSubview(m_AboutWebView)
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
     
     
     override func viewDidLoad() {

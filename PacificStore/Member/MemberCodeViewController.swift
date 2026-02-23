@@ -153,12 +153,24 @@ class MemberCodeViewController: BaseViewController {
                 
                 
                 let  strQrcode  = DataDic.object(forKey: "Qrcode") as! String;
-                m_imageViewQrcode.downloaded(from: strQrcode)
-                
+                //m_imageViewQrcode.downloaded(from: strQrcode)
+                fetchImage(from: strQrcode) { image in
+                    // IMPORTANT: Update UI on the main thread
+                    DispatchQueue.main.async { [weak imageView = self.m_imageViewQrcode] in
+                        imageView?.image = image!
+                    }
+                }
                 
                 let   strBarCode  = DataDic.object(forKey: "BarCode") as! String;
-                m_imageViewBarCode.downloaded(from: strBarCode)
+                fetchImage(from: strBarCode) { image in
+                    // IMPORTANT: Update UI on the main thread
+                    DispatchQueue.main.async { [weak imageView = self.m_imageViewBarCode] in
+                        imageView?.image = image!
+                    }
+                }
+
                 
+              //m_imageViewBarCode.downloaded(from: strBarCode)
                 m_labelCard.text = "卡號：" + ConfigInfo.m_strCardNumber;
                 
                 

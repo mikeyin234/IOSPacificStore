@@ -17,6 +17,8 @@ class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
     let   TITLE_WIDTH:CGFloat  =  80.0;
     var  m_strTypeID = "0";
     var m_ListTitleInfo:[NSDictionary] =  [];
+    var m_ImageDownloadIndex:[Int] =  [];
+    var m_ImageIndex = 0
     
     
     override func viewDidLoad() {
@@ -54,13 +56,20 @@ class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
         {
             let dataDic = m_ListTitleInfo[iSelect];
             let  imageName = dataDic.object(forKey: "ImageName");
-            
-            
             let url = URL(string:imageName as! String);
+            
+            fetchImage(from: url!.absoluteString) { image in
+                // IMPORTANT: Update UI on the main thread
+                DispatchQueue.main.async { [] in
+                    self.mScrollView.display(image:  image!)
+                }
+            }
+            
+            /*
             let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
             let image = UIImage(data: data!)!
             mScrollView.display(image:  image)
-            
+            */
             
         }
     }
@@ -114,25 +123,46 @@ class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
             let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
             let  strCode = dic.object(forKey: "ReturnCode") as! String;
             
+            
             if(Int(strCode) == 0)
             {           
                 let DataArray = dic.object(forKey: "Data") as! NSArray;
-                
+            
+                m_ImageDownloadIndex.removeAll()
                 var i = 0;
+                m_ImageIndex = 0
+                
                 for DataDic  in DataArray
                 {
                     let dicData  = DataDic as! NSDictionary
                     m_ListTitleInfo.append(dicData)
                     
+                    
                     let  imageName = dicData.object(forKey: "SmallImageName");
                     let url = URL(string:imageName as! String);
+                    m_ImageDownloadIndex.append(i)
                     
+                    
+                    fetchImage(from: url!.absoluteString) { image in
+                        
+                        // IMPORTANT: Update UI on the main thread
+                        print("m_ImageIndex = \(self.m_ImageIndex)")
+                        
+                        DispatchQueue.main.async { [index = self.m_ImageDownloadIndex[self.m_ImageIndex]] in
+                            
+                            self.AddImageToScrollView(image: image!,iIndex: index)
+                            
+                        }
+                        self.m_ImageIndex += 1
+                    }
+                    
+                    /*
                     let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
                     let image = UIImage(data: data!)!
-                    
                     self.AddImageToScrollView(image: image,iIndex: i);
-                    
+                    */
                     i += 1;
+                    
                 }
                 
                 
