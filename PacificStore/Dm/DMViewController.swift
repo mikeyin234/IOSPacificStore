@@ -125,9 +125,8 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
             let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
             let  strCode = dic.object(forKey: "ReturnCode") as! String;
             self.mPageControl.numberOfPages  = 0;
-            
-            
             m_ImageDownloadIndex.removeAll()
+            
             
             if(Int(strCode) == 0)
             {               
@@ -152,6 +151,7 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
                     }
             
                     i += 1;
+                    Thread.sleep(forTimeInterval: 0.5)
                 }
                 
                 

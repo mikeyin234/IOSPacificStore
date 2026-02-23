@@ -156,13 +156,8 @@ class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
                         self.m_ImageIndex += 1
                     }
                     
-                    /*
-                    let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
-                    let image = UIImage(data: data!)!
-                    self.AddImageToScrollView(image: image,iIndex: i);
-                    */
                     i += 1;
-                    
+                    Thread.sleep(forTimeInterval: 0.5)
                 }
                 
                 

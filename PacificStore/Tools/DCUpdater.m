@@ -150,8 +150,9 @@ static DCUpdater *instance_ = nil;
 NSString * const NETWORK_ERROR_CONNECT = @"伺服器連線發生錯誤!";
 
 
-static NSString * const kDCHostName = @"https://testapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
-//static NSString * const kDCHostName= @"https://newapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
+//static NSString * const kDCHostName = @"https://testapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
+
+static NSString * const kDCHostName= @"https://newapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
 
 
 
