@@ -9,6 +9,26 @@ import UIKit
 import WebKit
 
 
+
+//HTTPS PROBLEM......
+class MySessionDelegate: NSObject, URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        
+        // Check if the challenge is for server trust
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            if let serverTrust = challenge.protectionSpace.serverTrust {
+                // Use this to trust the specific problematic server during testing
+                completionHandler(.useCredential, URLCredential(trust: serverTrust))
+                return
+            }
+        }
+        // Fall back to default handling for all other challenges
+        completionHandler(.performDefaultHandling, nil)
+    }
+}
+
+
+
 extension UIImageView {
     func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         contentMode = mode
@@ -631,6 +651,56 @@ class BaseViewController: UIViewController {
            }
        }
     }
+    
+    
+    
+    func fetchImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        // 1. Ensure the URL is valid
+        guard let url = URL(string: urlString) else {
+            print("Error: Invalid URL string")
+            completion(nil)
+            return
+        }
+        
+        let delegate = MySessionDelegate()
+        let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
+        
+        // 2. Use a URLSession data task to asynchronously fetch the data
+        let task = session.dataTask(with: url) { (data, response, error) in
+            // 3. Handle errors
+            if let error = error {
+                print("Error fetching image: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            // 4. Check if data was received and create a UIImage
+            if let data = data, let image = UIImage(data: data) {
+                // 5. Call the completion handler with the image
+                completion(image)
+            } else {
+                print("Error: Could not create image from data")
+                completion(nil)
+            }
+        }
+        
+        // 6. Start the task
+        task.resume()
+    }
+    
+    
+    // Example usage within a UIViewController (or similar UI context)
+    func setImage(to imageView: UIImageView ,imageUrlString:String ) {        
+        fetchImage(from: imageUrlString) { image in
+            // IMPORTANT: Update UI on the main thread
+            DispatchQueue.main.async { [weak imageView] in
+                imageView?.image = image ?? UIImage(named: "placeholder") // Use a placeholder image if loading fails
+            }
+        }
+    }
+    
+    
+    
 }
 
 
