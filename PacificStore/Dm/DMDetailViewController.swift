@@ -12,13 +12,12 @@ import UIKit
 class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
                   
 {
-
     @IBOutlet weak var mScrollView: ImageScrollView!
-    
     @IBOutlet weak var mSmallScrollView: UIScrollView!
     let   TITLE_WIDTH:CGFloat  =  80.0;
     var  m_strTypeID = "0";
     var m_ListTitleInfo:[NSDictionary] =  [];
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +55,13 @@ class DMDetailViewController: BaseViewController,ImageScrollViewDelegate
             let dataDic = m_ListTitleInfo[iSelect];
             let  imageName = dataDic.object(forKey: "ImageName");
             
-            let url = URL(string:imageName as! String);
             
+            let url = URL(string:imageName as! String);
             let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
             let image = UIImage(data: data!)!
-            mScrollView.display(image:  image)            
+            mScrollView.display(image:  image)
+            
+            
         }
     }
     

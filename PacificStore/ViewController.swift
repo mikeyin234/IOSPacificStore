@@ -51,21 +51,14 @@ UITableViewDelegate,UITableViewDataSource{
     
     
     func downloaded(from url: URL,cell: ImageTableViewCell) {
-           URLSession.shared.dataTask(with: url) { data, response, error in
-               guard
-                
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                               let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                               let data = data, error == nil,
-                               let image = UIImage(data: data)
-                   else { return }
-               DispatchQueue.main.async() { [weak self] in
-                   //self?.image = image
-                  self!.m_imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                  cell.LoadData(image: image);
-                
-               }
-           }.resume()
+        
+        fetchImage(from: url.absoluteString) { image in
+            // IMPORTANT: Update UI on the main thread
+            DispatchQueue.main.async {[] in
+                self.m_imageCache.setObject(image!, forKey: url.absoluteString as NSString)
+                cell.LoadData(image: image!);
+            }
+        }                
        }
     
     

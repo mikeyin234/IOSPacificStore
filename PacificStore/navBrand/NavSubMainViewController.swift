@@ -102,13 +102,28 @@ UITableViewDelegate,UITableViewDataSource{
             cell.m_imageView.image = (cachedImage as! UIImage)
         }else
         {
+            
+            
+            fetchImage(from: url!.absoluteString) { image in
+                // IMPORTANT: Update UI on the main thread
+                DispatchQueue.main.async { [weak imageView = cell.m_imageView] in
+                    
+                    if(image != nil)
+                    {
+                        imageView?.image = image!
+                        self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
+                    }
+                }
+            }
+            
+            /*
             let data = try? Data(contentsOf: url!) //make sure your image in this url does exist,
             if(data != nil)
             {
                 let image = UIImage(data: data!)!
                 m_imageCache.setObject(image, forKey: url!.absoluteString as NSString)
                 cell.m_imageView.image = image
-            }
+            }*/
         }
         
         let strYoutube  = m_ListDetailInfo[indexPath.row].object(forKey: "YoutubeID") as! String

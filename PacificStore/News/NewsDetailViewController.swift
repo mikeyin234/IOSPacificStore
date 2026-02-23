@@ -13,7 +13,7 @@ import WebKit
 import youtube_ios_player_helper
 
 
-class NewsDetailViewController: BaseViewController,WKUIDelegate,YTPlayerViewDelegate{
+class NewsDetailViewController: BaseViewController,WKUIDelegate,WKNavigationDelegate,YTPlayerViewDelegate{
     
     var   m_PolicyWebView : WKWebView!
     
@@ -40,8 +40,25 @@ class NewsDetailViewController: BaseViewController,WKUIDelegate,YTPlayerViewDele
         m_PolicyWebView  = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: poliwebFrame.size.height), configuration: WKWebViewConfiguration())
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate  = self
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
+    }
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
     }
     
     
@@ -163,6 +180,8 @@ class NewsDetailViewController: BaseViewController,WKUIDelegate,YTPlayerViewDele
         
     }
     
+    
+   
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
                 self.m_playerView.playVideo();

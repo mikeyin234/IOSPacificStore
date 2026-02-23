@@ -35,6 +35,8 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
     @objc func  onImageViewClick(gesture: UITapGestureRecognizer)
     {
         
+        if(mPageControl.currentPage < m_ListTitleInfo.count)
+        {
             let  StoryBoard = UIStoryboard(name: "Main" , bundle: nil)
             
             let  btDMOnLineDetail
@@ -46,7 +48,7 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
             btDMOnLineDetail.m_strTypeID  = dataDic.object(forKey: "id") as! String
         
             self.navigationController?.pushViewController(btDMOnLineDetail, animated: true)
-        
+        }
     }
     
     
@@ -121,6 +123,8 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
         {
             let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
             let  strCode = dic.object(forKey: "ReturnCode") as! String;
+            self.mPageControl.numberOfPages  = 0;
+            
             
             if(Int(strCode) == 0)
             {               

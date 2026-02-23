@@ -12,7 +12,7 @@ import WebKit
 import youtube_ios_player_helper
 
 
-class FoodDetailViewController: BaseViewController,WKUIDelegate,YTPlayerViewDelegate {
+class FoodDetailViewController: BaseViewController,WKUIDelegate,WKNavigationDelegate,YTPlayerViewDelegate {
     var   m_PolicyWebView : WKWebView!
     @IBOutlet     weak var   m_ViewContent:UIView!;
     @IBOutlet weak var m_labelTitle: UILabel!
@@ -35,9 +35,27 @@ class FoodDetailViewController: BaseViewController,WKUIDelegate,YTPlayerViewDele
         m_PolicyWebView  = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: poliwebFrame.size.height), configuration: WKWebViewConfiguration())
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate  = self
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
     
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
