@@ -186,6 +186,7 @@ UIPickerViewDelegate,UIPickerViewDataSource{
             m_textBirthday.isEnabled = false;
         }
         
+        
         DCUpdater.shared()?.queryCitys();
         m_textAddress.tag = 303;
         
@@ -278,12 +279,7 @@ UIPickerViewDelegate,UIPickerViewDataSource{
                 }
                 
                 DCUpdater.shared().queryPersonalUserDataPolicy();
-                
-                
-            }else
-            {
-                ShowAlertControl(Message:  dic.object(forKey: "ReturnMessage") as! String);
-            }
+            }            
         }else
         {
             ShowAlertControl(Message: "您的網路連線不通，請檢查您的網路狀態，或至網路通暢的環境下使用");
@@ -557,10 +553,11 @@ UIPickerViewDelegate,UIPickerViewDataSource{
             if(Int(strCode) == 0)
             {
                 FinalRegisterViewController.m_strPolicySite = dic.object(forKey: "WebPage") as! String;
-            }else
+            }
+            /*else
             {
                 ShowAlertControl(Message:  dic.object(forKey: "ReturnMessage") as! String);
-            }
+            }*/
         }else
         {
             ShowAlertControl(Message: "您的網路連線不通，請檢查您的網路狀態，或至網路通暢的環境下使用");

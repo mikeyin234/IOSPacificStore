@@ -8,7 +8,9 @@
 
 import UIKit
 
-class CardPolicyViewController: BaseViewController,WKUIDelegate {
+////////////////////////
+//卡片權益
+class CardPolicyViewController: BaseViewController,WKUIDelegate, WKNavigationDelegate {
     
     
     var   m_PolicyWebView : WKWebView!
@@ -31,6 +33,24 @@ class CardPolicyViewController: BaseViewController,WKUIDelegate {
         
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
+    
         
     /*
     // MARK: - Navigation
@@ -61,6 +81,9 @@ class CardPolicyViewController: BaseViewController,WKUIDelegate {
         m_PolicyWebView = WKWebView(frame:   poliwebFrame, configuration: webConfiguration)
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate = self
+        
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }

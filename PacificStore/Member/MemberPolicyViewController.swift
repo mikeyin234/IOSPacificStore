@@ -9,8 +9,8 @@
 import UIKit
 import WebKit
 
-
-class MemberPolicyViewController: BaseViewController,WKUIDelegate {
+//會員權益隱私政策
+class MemberPolicyViewController: BaseViewController,WKUIDelegate ,WKNavigationDelegate{
     
     var   m_PolicyWebView : WKWebView!
     @IBOutlet     weak var   m_ViewContent:UIView!;
@@ -28,6 +28,8 @@ class MemberPolicyViewController: BaseViewController,WKUIDelegate {
         m_PolicyWebView = WKWebView(frame:   poliwebFrame, configuration: webConfiguration)
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate = self
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }
@@ -39,6 +41,23 @@ class MemberPolicyViewController: BaseViewController,WKUIDelegate {
         self.clearCache();
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
     
     
     override func  viewWillAppear(_ animated: Bool) {
