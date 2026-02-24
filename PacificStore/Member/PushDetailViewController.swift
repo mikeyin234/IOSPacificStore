@@ -9,7 +9,8 @@
 import UIKit
 import WebKit
 
-class PushDetailViewController: BaseViewController, WKUIDelegate{
+
+class PushDetailViewController: BaseViewController, WKUIDelegate,WKNavigationDelegate{
 
     var   m_PolicyWebView : WKWebView!
     @IBOutlet     weak var   m_ViewContent:UIView!;
@@ -37,9 +38,28 @@ class PushDetailViewController: BaseViewController, WKUIDelegate{
         m_PolicyWebView  = WKWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: poliwebFrame.size.height), configuration: WKWebViewConfiguration())
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate = self
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
     
     
     

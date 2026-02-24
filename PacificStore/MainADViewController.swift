@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 
-class MainADViewController: BaseViewController,WKUIDelegate {
+class MainADViewController: BaseViewController,WKUIDelegate,WKNavigationDelegate {
 
     var   m_PolicyWebView : WKWebView!
     @IBOutlet     weak var   m_ViewContent:UIView!;
@@ -33,6 +33,8 @@ class MainADViewController: BaseViewController,WKUIDelegate {
         
         
         m_PolicyWebView.uiDelegate = self
+        m_PolicyWebView.navigationDelegate = self
+        
         m_ViewContent.addSubview(m_PolicyWebView)
         
     }
@@ -46,6 +48,23 @@ class MainADViewController: BaseViewController,WKUIDelegate {
         m_labTitle.text = m_strTitle;
         
     }
+    
+    
+    func webView(_ webView: WKWebView,
+        didReceive challenge: URLAuthenticationChallenge,
+        completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+        {
+            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+            completionHandler(.useCredential, cred)
+        }
+        else
+        {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
     
     
     /*

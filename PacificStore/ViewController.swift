@@ -151,6 +151,7 @@ UITableViewDelegate,UITableViewDataSource{
                  let  StoryBoard = UIStoryboard(name: "Main" , bundle: nil)
                  let  btSubNavBrandMain
                             = StoryBoard.instantiateViewController(withIdentifier: "MainAd") as! MainADViewController;
+                
                 btSubNavBrandMain.m_strWebPage   = m_imageBigMain[iTag!].object(forKey: "WebPage") as! String
                 btSubNavBrandMain.m_strTitle   = m_imageBigMain[iTag!].object(forKey: "Name") as! String
                 self.navigationController?.pushViewController(btSubNavBrandMain, animated: true)
