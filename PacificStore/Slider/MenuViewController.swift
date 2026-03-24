@@ -207,6 +207,10 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         //arrayMenuOptions.append(["title":"國泰世華聯名卡", "icon":"cathayBank"])
         arrayMenuOptions.append(["title":"相關連結", "icon":"menu_link"])
         
+        
+      
+        
+        
         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
         
         arrayMenuOptions.append(["title":"V" + appVersion! + ConfigInfo.m_strBetaVersion, "icon":""])

@@ -37,7 +37,13 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
     let  MEMBER_INFO_MODIFY   = 10
     let  MODIFY_PASSWORD      = 11
     let  POLICY_CENTER        = 12
-    let  LOGOUT      = 13
+    
+    
+    /////////////////////////////////////////////
+    //add at    2026/03/24
+    let  DELETE_ME        = 13
+    
+    let  LOGOUT      = 14
     
     
     /*
@@ -54,7 +60,9 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
     //消費積點紀錄查詢   會員點數，  消費紀錄，
     var  m_menuOption = ["專屬福利","小遊戲-美人魚幸運籤","訊息中心","消費積點紀錄查詢","我的電子贈券","Q點/摸彩券", "點數換好禮/活動禮",
                         "發票補登", "全部兌換券查詢","專屬優惠券","會員資料修改",
-                        "密碼修改","會員權益/隱私政策","登出"];
+                        "密碼修改","會員權益/隱私政策",
+                         "刪除帳號","登出"];
+    
     
     //let m_menuOption = ["會員點數查詢","會員資料修改",
       //                  "密碼修改","會員權益/隱私政策","登出"];
@@ -387,6 +395,14 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             let  btPurchaseDevice
                 = StoryBoard.instantiateViewController(withIdentifier: "MemberPolicy");
             self.navigationController?.pushViewController(btPurchaseDevice, animated: true)
+            break;
+        case DELETE_ME:
+            ShowAlertControlDelete(Message: "請透過以下方式提交帳戶刪除請求：" + "\n" +
+                                   "- 電子郵件：service@pacific-mall.com.tw" + "\n" +
+                                   "- 支援表單：https://fy.pacific-mall.com.tw/service.php" + "\n" +
+                                   "- 免付費電話：0800-311-168" + "\n" +
+                                   "- 現場辦理：豐原太平洋百貨九樓貴賓廳");
+            
             break;
         case LOGOUT:
             Logout(IsDirectLogout: false);
@@ -723,6 +739,39 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             }
         }
     }
+    
+    
+    func ShowAlertControlDelete(Message:String)
+    {
+        
+        let alert = UIAlertController(title: "系統資訊", message: Message, preferredStyle: .alert)
+        
+        // 1. 設定靠左對齊的段落樣式
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+
+        // 2. 建立帶有樣式的 attributedString
+        let messageText = NSAttributedString(
+            string: Message,
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .font: UIFont.systemFont(ofSize: 13), // 可選：設定字體大小
+                .foregroundColor: UIColor.black // 可選：設定顏色
+            ]
+        )
+
+        // 3. 使用 KVC 修改 UIAlertController 的訊息
+        alert.setValue(messageText, forKey: "attributedMessage")
+        
+        
+        alert.addAction(UIAlertAction(title: "確定", style: .default, handler: { [self] (UIAlertAction) in
+            
+        }));
+        
+        self.present(alert, animated: true)
+    }
+    
+    
     
     func ShowAlertControlLogout(Message:String)
     {
