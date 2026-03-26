@@ -21,6 +21,12 @@
 #define          ALREADY_EXCHANGE     15
 
 
+
+extern NSString * const kDCQueryIDInfo;
+
+
+
+
 extern NSString * const kDCLogin;
 extern NSString * const kDCForgetPWD;
 extern NSString * const kDCRegisterUser;
@@ -428,11 +434,12 @@ andAllowModifyData:(Boolean)bIsAllow;
 
 
 -(void)DeleteAllPushMessage:(NSString *)strAccessToken;
-
-
-
 -(void)QueryPersonalUserDataPolicy;
 
+
+
+//add 26/03/26
+-(void)QueryIDInfo;
 
 
 

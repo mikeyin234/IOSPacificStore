@@ -55,8 +55,11 @@ UITableViewDelegate,UITableViewDataSource{
         fetchImage(from: url.absoluteString) { image in
             // IMPORTANT: Update UI on the main thread
             DispatchQueue.main.async {[] in
-                self.m_imageCache.setObject(image!, forKey: url.absoluteString as NSString)
-                cell.LoadData(image: image!);
+                if(image != nil)
+                {
+                    self.m_imageCache.setObject(image!, forKey: url.absoluteString as NSString)
+                    cell.LoadData(image: image!);                    
+                }
             }
         }                
        }
@@ -188,6 +191,8 @@ UITableViewDelegate,UITableViewDataSource{
         //
         LoadToUserInfo();
         
+        
+        /*
         if(!isKeyPresentInUserDefaults(key: "IsFirstIn"))
         {
             let myUserDefaults = UserDefaults.standard;
@@ -204,6 +209,8 @@ UITableViewDelegate,UITableViewDataSource{
             //RefershMainPage();
             ConfigInfo.m_bIsViewMemberLogin = false;
         }
+         
+         */
         
         m_textUnReadCount.layer.cornerRadius = m_textUnReadCount.frame.width/2
         
@@ -231,6 +238,10 @@ UITableViewDelegate,UITableViewDataSource{
         /////////////////////////////////////////////////////////
         //for test 2023/07/30
         //GotoFinalRegisterVirify();
+        
+        
+        DCUpdater.shared()?.queryIDInfo()
+        
         
         
    }
@@ -305,6 +316,12 @@ UITableViewDelegate,UITableViewDataSource{
         
         
         NotificationCenter.default.addObserver(self, selector:#selector(didQueryMainAdInterval), name:NSNotification.Name(rawValue: kDCQueryMainAdInterval), object: nil)
+        
+       
+        
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(didQueryIDInfo), name:NSNotification.Name(rawValue: kDCQueryIDInfo), object: nil)
+        
         
         
         
@@ -914,6 +931,49 @@ UITableViewDelegate,UITableViewDataSource{
             print("Torch is not available")
         }
     }
+    
+    
+    
+    
+    @objc func didQueryIDInfo(notification: NSNotification){
+        
+           //do stuff
+           let userInfo = notification.userInfo as NSDictionary?;
+           let strSuccess = userInfo?.object(forKey: "isSuccess") as! NSString
+        
+           if(strSuccess.isEqual(to: "YES"))
+           {
+               let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
+               let  strCode = dic.object(forKey: "ReturnCode") as! String;
+               
+               if(Int(strCode) == 0)
+               {
+                   ConfigInfo.m_strAcountLabel  = dic.object(forKey: "IDTitle") as! String
+                   ConfigInfo.m_strAccountHint  = dic.object(forKey: "IDHint") as! String
+               }
+           }
+        
+        
+        //03/26 move 
+        if(!isKeyPresentInUserDefaults(key: "IsFirstIn"))
+        {
+            let myUserDefaults = UserDefaults.standard;
+            
+            myUserDefaults.set(false , forKey: "IsFirstIn")
+            myUserDefaults.synchronize();
+            
+            ConfigInfo.m_bIsViewMemberLogin = true;
+            
+            goMemberCenter();
+            
+        }else
+        {
+            //RefershMainPage();
+            ConfigInfo.m_bIsViewMemberLogin = false;
+        }
+        
+    }
+    
     
     
     

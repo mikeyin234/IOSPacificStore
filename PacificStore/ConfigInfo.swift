@@ -35,11 +35,19 @@ struct GAME_INFO {
 
 class ConfigInfo
 {
+
+//=======================================================//
+    public static var  m_strAcountLabel = "身份證號"
+    
+    public static var  m_strAccountHint = "請輸入帳號(身份證字號)"
+//=======================================================//
+    
+    
     public static  var  m_fDefaultBright:CGFloat = 0.0;
 
     
-    public static let HOST_SERVER = "https://newapp.pacific-mall.com.tw:8043/";
-    //public static let HOST_SERVER = "https://testapp.pacific-mall.com.tw:8043/";
+    //public static let HOST_SERVER = "https://newapp.pacific-mall.com.tw:8043/";
+    public static let HOST_SERVER = "https://testapp.pacific-mall.com.tw:8043/";
     
     
     public static let  PARKING_SITE = HOST_SERVER + "Upload/Webpages/parking.htm"

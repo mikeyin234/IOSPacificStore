@@ -133,15 +133,14 @@ NSString * const kDCUpdateMobileCode  = @"kDCUpdateMobileCode";
 NSString * const kDCQueryCitys  = @"kDCQueryCitys";
 NSString * const kDCQueryAreas  = @"kDCQueryAreas";
 
-
 //======================================================//
 NSString * const kDCDeleteAllPush  = @"kDCDeleteAllPush";
-
-
-
 NSString * const kDCPersonalDataUseTerms  = @"kDCPersonalDataUseTerms";
 
 
+//////////////////////////////////////////////////////
+//add at    2026/03/26
+NSString * const kDCQueryIDInfo  = @"kDCQueryIDInfo";
 
 
 
@@ -150,9 +149,10 @@ static DCUpdater *instance_ = nil;
 NSString * const NETWORK_ERROR_CONNECT = @"伺服器連線發生錯誤!";
 
 
-//static NSString * const kDCHostName = @"https://testapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
+static NSString * const kDCHostName = @"https://testapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
 
-static NSString * const kDCHostName= @"https://newapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
+
+//static NSString * const kDCHostName= @"https://newapp.pacific-mall.com.tw/PacificStoreProcess.ashx";
 
 
 
@@ -2215,6 +2215,26 @@ MKNetworkOperation *operation = [_networkEngine operationWithURLString:urlString
     
 }
 
+
+-(void)QueryIDInfo
+{
+    NSString* urlString = kDCHostName;
+    
+    NSDictionary *paramsData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"GetIDCardInputMessage", @"Function",
+                                nil];
+    
+    NSString* strJsonData  = [self GetjsonData:paramsData];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            strJsonData, @"Param",
+                            nil];
+    
+    MKNetworkOperation *operation = [_networkEngine operationWithURLString:urlString                                                                    params:params                                                                httpMethod:@"POST"];
+    
+    [self PostToRemoteServer:operation andNotifyCode:kDCQueryIDInfo];
+    
+    
+}
 
 
 

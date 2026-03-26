@@ -196,8 +196,11 @@ class MainHScrollTableViewCell: UITableViewCell,UIScrollViewDelegate {
         m_ParentViewController.fetchImage(from: url.absoluteString) { image in
             // IMPORTANT: Update UI on the main thread
             DispatchQueue.main.async {[] in
-                self.m_imageCache.setObject(image!, forKey: url.absoluteString as NSString)
-                self.AddImageToScrollView(image: image!,iIndex: iIndex);
+                if(image != nil)
+                {
+                    self.m_imageCache.setObject(image!, forKey: url.absoluteString as NSString)
+                    self.AddImageToScrollView(image: image!,iIndex: iIndex);                    
+                }
             }
         }
         

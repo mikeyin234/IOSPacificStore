@@ -71,6 +71,11 @@ class ModifyMemberViewController: BaseViewController,UITextFieldDelegate,
     @IBOutlet var m_uiContentView : UIView!
     
   
+    
+    @IBOutlet var       m_labelAccount : UILabel!
+    
+    
+    
     override func viewDidLayoutSubviews() {
         
         let iHeight = m_btnOK.frame.origin.y +  m_btnOK.frame.size.height + 20;
@@ -261,8 +266,13 @@ class ModifyMemberViewController: BaseViewController,UITextFieldDelegate,
         m_btnCheckPolicy.isEnabled = !MemberCenterViewController.m_bAlowModifyData
         let image = m_bIsCheckPolicy ? UIImage(named:"check") : UIImage(named:"uncheck")
         m_btnCheckPolicy.setBackgroundImage(image! , for: UIControl.State.normal)
-        
         CheckShowAlertMsg();
+        
+        
+        m_labelAccount.text  = ConfigInfo.m_strAcountLabel
+        m_textAccount.placeholder =  ConfigInfo.m_strAccountHint
+        
+        
     }
     
     func  CheckShowAlertMsg()

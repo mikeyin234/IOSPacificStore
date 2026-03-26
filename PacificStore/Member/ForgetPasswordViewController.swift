@@ -15,6 +15,11 @@ class ForgetPasswordViewController: BaseViewController {
     
     @IBOutlet weak var  m_buttonSend:UIButton!
     
+    
+    @IBOutlet var       m_labelAccount : UILabel!
+    
+    
+    
     var  m_timer:Timer!;
     var m_iCounter = 0;
     
@@ -31,6 +36,10 @@ class ForgetPasswordViewController: BaseViewController {
         
         let toolBarOTPCode = UIToolbar().ToolbarPiker(mySelect: #selector(doneButtonOTP))
         m_textOtpCode.inputAccessoryView = toolBarOTPCode
+        
+        
+        m_labelAccount.text  = ConfigInfo.m_strAcountLabel
+        m_textAccount.placeholder =  ConfigInfo.m_strAccountHint
     }
     
     

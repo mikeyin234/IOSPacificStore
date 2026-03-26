@@ -15,6 +15,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var m_SavePassword:UISwitch!
     
     @IBOutlet weak var m_imageView:UIImageView!
+    @IBOutlet var       m_labelAccount : UILabel!
     
     
     var  m_strUserID = "";
@@ -68,7 +69,10 @@ class LoginViewController: BaseViewController {
         }
         
 //=========================================//
+        m_labelAccount.text  = ConfigInfo.m_strAcountLabel
         
+        
+        m_textAccount.placeholder =  ConfigInfo.m_strAccountHint
         
         
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="poW-fh-NKs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="poW-fh-NKs">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -530,6 +530,7 @@ GOacg+WToeiou+WGig
                     <connections>
                         <outlet property="m_SavePassword" destination="YiI-QN-9vc" id="Ymw-ey-Uaf"/>
                         <outlet property="m_imageView" destination="RZw-Yf-YjP" id="yIn-bb-LXh"/>
+                        <outlet property="m_labelAccount" destination="wnQ-wT-jwQ" id="JMk-1M-Ojs"/>
                         <outlet property="m_textAccount" destination="n4m-jC-Z03" id="WeC-H9-pHl"/>
                         <outlet property="m_textPassword" destination="ISE-to-c6K" id="OHA-i6-lpS"/>
                     </connections>
@@ -851,6 +852,7 @@ GOacg+WToeiou+WGig
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="m_labelAccount" destination="B9O-KP-hKj" id="1NJ-Gl-fVN"/>
                         <outlet property="m_labelTitle" destination="G4V-cW-hEX" id="MpY-jQ-WPV"/>
                         <outlet property="m_textAccount" destination="asx-Vl-fxA" id="PlO-wG-fgj"/>
                         <outlet property="m_textConfirmPassword" destination="pHf-aZ-CUI" id="3eJ-B2-beI"/>
@@ -1769,6 +1771,7 @@ GOacg+WToeiou+WGig
                     </view>
                     <connections>
                         <outlet property="m_buttonSend" destination="4rA-QH-Fj3" id="eDn-v5-qZL"/>
+                        <outlet property="m_labelAccount" destination="zie-jR-cWn" id="2QE-id-LvC"/>
                         <outlet property="m_textAccount" destination="vXr-SL-uy6" id="IFa-bZ-gxJ"/>
                         <outlet property="m_textOtpCode" destination="fM8-2W-fj4" id="UGh-6w-pLG"/>
                     </connections>
@@ -3337,6 +3340,7 @@ GOacg+WToeiou+WGig
                     <connections>
                         <outlet property="m_btnCheckPolicy" destination="ihV-Fg-b4i" id="Z91-vL-dbU"/>
                         <outlet property="m_btnOK" destination="Ey0-X7-uIY" id="yTW-d1-FUd"/>
+                        <outlet property="m_labelAccount" destination="mDp-pL-ix0" id="ecq-Oh-bwT"/>
                         <outlet property="m_labelCardType" destination="YR0-rO-r4b" id="0Sh-lq-sPP"/>
                         <outlet property="m_labelName" destination="C09-jW-EJ2" id="XQn-vc-zYn"/>
                         <outlet property="m_lablePersonalData" destination="Mxz-wd-yA6" id="8uT-tm-5jx"/>
@@ -9359,7 +9363,7 @@ GOacg+WToeiou+WGig
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vSp-BH-FRz">
-                                        <rect key="frame" x="33" y="91" width="309" height="41"/>
+                                        <rect key="frame" x="33" y="91" width="309" height="40"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -10030,13 +10034,13 @@ GOacg+WToeiou+WGig
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

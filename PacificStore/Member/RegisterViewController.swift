@@ -18,6 +18,8 @@ class RegisterViewController: BaseViewController, UITextFieldDelegate{
     @IBOutlet weak var m_labelTitle: UILabel!
     
     
+    @IBOutlet var       m_labelAccount : UILabel!
+    
     
     
     override func viewDidLoad() {
@@ -37,6 +39,12 @@ class RegisterViewController: BaseViewController, UITextFieldDelegate{
         
         
         self.AddOnTouchClick(vTouch: m_labelTitle, action: #selector(self.onMemberDelete))
+        
+        
+        
+        
+        m_labelAccount.text  = ConfigInfo.m_strAcountLabel
+        m_textAccount.placeholder =  ConfigInfo.m_strAccountHint
         
         
     }
