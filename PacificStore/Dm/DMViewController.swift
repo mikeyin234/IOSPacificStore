@@ -144,9 +144,13 @@ class DMViewController: BaseViewController,UIScrollViewDelegate {
                     
                     fetchImage(from: url!.absoluteString) { image in
                         // IMPORTANT: Update UI on the main thread
-                        DispatchQueue.main.async { [index =  self.m_ImageDownloadIndex[0]] in
-                            self.AddImageToScrollView(image: image!,iIndex: index);
-                            self.m_ImageDownloadIndex.remove(at: 0)
+                        
+                        if(image != nil)
+                        {
+                            DispatchQueue.main.async { [index =  self.m_ImageDownloadIndex[0]] in
+                                self.AddImageToScrollView(image: image!,iIndex: index);
+                                self.m_ImageDownloadIndex.remove(at: 0)
+                            }                            
                         }
                     }
             

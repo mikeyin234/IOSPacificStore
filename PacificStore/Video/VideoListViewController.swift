@@ -97,10 +97,13 @@ class VideoListViewController: BaseViewController  , UITableViewDelegate,UITable
             
             fetchImage(from: url!.absoluteString) { image in
                 // IMPORTANT: Update UI on the main thread
-                DispatchQueue.main.async { [weak imageView = Mycell.m_imageView] in
-                    
-                    self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
-                    imageView?.image = image!
+                if(image != nil)
+                {
+                    DispatchQueue.main.async { [weak imageView = Mycell.m_imageView] in
+                        
+                        self.m_imageCache.setObject(image!, forKey: url!.absoluteString as NSString)
+                        imageView?.image = image!
+                    }                    
                 }
             }
             
