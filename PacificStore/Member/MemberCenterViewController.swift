@@ -61,7 +61,7 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
     var  m_menuOption = ["專屬福利","小遊戲-美人魚幸運籤","訊息中心","消費積點紀錄查詢","我的電子贈券","Q點/摸彩券", "點數換好禮/活動禮",
                         "發票補登", "全部兌換券查詢","專屬優惠券","會員資料修改",
                         "密碼修改","會員權益/隱私政策",
-                         "刪除帳號","登出"];
+                         "刪除APP會員帳號","登出"];
     
     
     //let m_menuOption = ["會員點數查詢","會員資料修改",
@@ -101,6 +101,9 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
     
     
     var m_bCheckAllowData  = true;
+    
+//============================================//
+    var   m_strIPAddress = ""
     
     //點數換好禮
     @objc func  onViewClick1(gesture: UITapGestureRecognizer)
@@ -169,7 +172,26 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
         {
             JumpToPage();
         }
+        
+        self.getPublicIPAddress { ipAddress in
+            self.m_strIPAddress = ipAddress ?? ""
+        }
+        
+        
     }
+    
+    
+    // Using a service like ipify.org
+    func getPublicIPAddress(completion: @escaping (String?) -> Void) {
+        guard let url = URL(string: "https://api.ipify.org") else { return }
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            if let data = data, let ip = String(data: data, encoding: .utf8) {
+                completion(ip)
+            } else { completion(nil) }
+        }.resume()
+    }
+    
+    
     
     func JumpToPage()
     {
@@ -768,7 +790,7 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             string: Message,
             attributes: [
                 .paragraphStyle: paragraphStyle,
-                .font: UIFont.systemFont(ofSize: 13), // 可選：設定字體大小
+                .font: UIFont.systemFont(ofSize: 16), // 可選：設定字體大小
                 .foregroundColor: UIColor.black // 可選：設定顏色
             ]
         )
