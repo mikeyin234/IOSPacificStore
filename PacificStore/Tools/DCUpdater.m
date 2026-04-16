@@ -14,6 +14,13 @@
 #import "NCChineseConverter.h"
 
 
+
+
+
+NSString * const kDCDeleteMember = @"kDCDeleteMember";
+
+
+
 NSString * const kDCLogin = @"kDCLogin";
 NSString * const kDCForgetPWD = @"kDCForgetPWD";
 NSString * const kDCRegisterUser = @"kDCRegisterUser";
@@ -2243,6 +2250,36 @@ MKNetworkOperation *operation = [_networkEngine operationWithURLString:urlString
 {
     return true;
 }
+
+
+
+
+
+-(void)DeleteMember:(NSString *)strAccessToken andIP:(NSString *)strIPAddress
+{
+    NSString* urlString = kDCHostName;
+    
+    NSDictionary *paramsData = [NSDictionary dictionaryWithObjectsAndKeys:
+                                strAccessToken, @"AccessToken",
+                                strIPAddress, @"SourceIP",
+                                @"DeleteMember", @"Function",
+                                nil];
+    
+    NSString* strJsonData  = [self GetjsonData:paramsData];
+    
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            strJsonData, @"Param",
+                            nil];
+    MKNetworkOperation *operation = [_networkEngine operationWithURLString:urlString
+                                                                    params:params
+                                                                httpMethod:@"POST"];
+    
+    [self PostToRemoteServer:operation andNotifyCode:kDCDeleteMember];
+    
+}
+
+
 
 
 @end

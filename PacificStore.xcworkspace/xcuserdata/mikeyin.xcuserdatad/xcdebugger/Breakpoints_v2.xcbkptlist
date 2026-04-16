@@ -366,8 +366,8 @@
             filePath = "PacificStore/Member/MemberCenterViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -382,8 +382,8 @@
             filePath = "PacificStore/Tools/DCUpdater.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2237"
-            endingLineNumber = "2237"
+            startingLineNumber = "2244"
+            endingLineNumber = "2244"
             landmarkName = "-QueryIDInfo"
             landmarkType = "7">
          </BreakpointContent>

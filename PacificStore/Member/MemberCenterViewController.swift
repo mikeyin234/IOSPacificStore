@@ -419,6 +419,7 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             self.navigationController?.pushViewController(btPurchaseDevice, animated: true)
             break;
         case DELETE_ME:
+            
             ShowAlertControlDelete(Message: "一旦刪除APP會員帳號資格，您將無法繼續享有APP所有功能及會員優惠，且之前所有累積之會員點數、抵用券、優惠券將全部失效，其間所有消費紀錄亦無法保留。" + "\n\n" +
                                    "由於當前系統和業務限制，本應用不支援直接在應用程式內刪除帳戶。但是，用戶可以透過以下方式提交帳戶刪除請求："  + "\n\n" +
                                    "- 電子郵件：service@pacific-mall.com.tw" + "\n" +
@@ -426,17 +427,6 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
                                    "- 免付費電話：0800-311-168" + "\n" +
                                    "- 現場辦理：豐原太平洋百貨九樓貴賓廳"   + "\n\n" +
                                    "為了驗證身份，我們需要用戶提供其註冊ID、行動電話、地址和使用者名稱。驗證通過後，我們將在7 個工作天內刪除使用者的帳戶，並移除或匿名化所有個人識別訊息，除非適用法律要求保留資料。");
-            
-            
-
-            
-
-
-           
-
-            
-
-            
             
             break;
         case LOGOUT:
@@ -446,6 +436,11 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             break;
         }
     }
+    
+    
+    
+   
+    
     
     
     func onInvoiceSupplement()
@@ -877,6 +872,10 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             NotificationCenter.default.addObserver(self, selector:#selector(didGetActivityGameResult), name:NSNotification.Name(rawValue: kDCGameActivity), object: nil)
             
             
+            
+            NotificationCenter.default.addObserver(self, selector:#selector(didDeleteMemberResult), name:NSNotification.Name(rawValue: kDCDeleteMember), object: nil)
+            
+            
         }
         
         self.SetTitleColor();
@@ -990,6 +989,44 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
            }
        }
        
+    
+    
+    
+    @objc func didDeleteMemberResult(notification: NSNotification){
+           
+           //do stuff
+           let userInfo = notification.userInfo as NSDictionary?;
+           let strSuccess = userInfo?.object(forKey: "isSuccess") as! NSString
+           
+           MBProgressHUDObjC.hideHUD(for: self.view, animated: true)
+           
+           if(strSuccess.isEqual(to: "YES"))
+           {
+               let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
+               let  strCode = dic.object(forKey: "ReturnCode") as! String;
+               ConfigInfo.m_gameInfo.iGameStartType = Int(strCode)!;
+               if(Int(strCode) == 0)
+               {
+                   //刪除成功
+                   
+               }else
+               {
+                   //刪除失敗
+                   
+               }
+           }else
+           {
+               ShowAlertControl(Message: "您的網路連線不通，請檢查您的網路狀態，或至網路通暢的環境下使用");
+           }
+       }
+    
+    func onDeleteMember()
+    {
+        
+        DCUpdater.shared()?.deleteMember(ConfigInfo.m_strAccessToken, andIP: m_strIPAddress)
+        
+        
+    }
     
     
 }

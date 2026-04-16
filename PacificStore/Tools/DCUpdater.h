@@ -140,8 +140,13 @@ extern  NSString * const kDCUpdateMobileCode;
 extern  NSString * const kDCQueryCitys;
 extern  NSString * const kDCQueryAreas;
 extern  NSString * const kDCDeleteAllPush;
-
 extern  NSString * const kDCPersonalDataUseTerms;
+
+
+
+extern NSString * const kDCDeleteMember;
+
+
 
 
 @interface DCUpdater : NSObject
@@ -441,6 +446,8 @@ andAllowModifyData:(Boolean)bIsAllow;
 //add 26/03/26
 -(void)QueryIDInfo;
 
+
+-(void)DeleteMember:(NSString *)strAccessToken andIP:(NSString *)strIPAddress;
 
 
 @end
