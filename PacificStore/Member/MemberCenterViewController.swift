@@ -1023,8 +1023,9 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
     func onDeleteMember()
     {
         
-        DCUpdater.shared()?.deleteMember(ConfigInfo.m_strAccessToken, andIP: m_strIPAddress)
+        MBProgressHUDObjC.showHUDAdded(to: self.view, animated: true)
         
+        DCUpdater.shared()?.deleteMember(ConfigInfo.m_strAccessToken, andIP: m_strIPAddress)
         
     }
     
