@@ -366,8 +366,8 @@
             filePath = "PacificStore/Member/MemberCenterViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -382,10 +382,10 @@
             filePath = "PacificStore/Tools/DCUpdater.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2244"
-            endingLineNumber = "2244"
-            landmarkName = "-QueryIDInfo"
-            landmarkType = "7">
+            startingLineNumber = "2245"
+            endingLineNumber = "2245"
+            landmarkName = "DCUpdater"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -481,6 +481,22 @@
             startingLineNumber = "177"
             endingLineNumber = "177"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68FD0B4C-B9B6-4020-83C1-385A0BB620C0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PacificStore/Member/MemberCenterViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "794"
+            endingLineNumber = "794"
+            landmarkName = "ShowAlertControlDelete(Message:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

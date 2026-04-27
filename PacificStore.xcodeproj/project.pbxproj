@@ -1806,7 +1806,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PacificStore/PacificStore.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 72;
 				DEVELOPMENT_TEAM = 648HXZN848;
 				INFOPLIST_FILE = PacificStore/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1815,7 +1815,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 6.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PacificStore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PacificStoreEx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PacificStore/PacificStore-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
@@ -1830,7 +1830,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = PacificStore/PacificStore.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 71;
+				CURRENT_PROJECT_VERSION = 72;
 				DEVELOPMENT_TEAM = 648HXZN848;
 				INFOPLIST_FILE = PacificStore/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1839,7 +1839,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 6.6;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PacificStore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.PacificStoreEx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "PacificStore/PacificStore-Bridging-Header.h";
