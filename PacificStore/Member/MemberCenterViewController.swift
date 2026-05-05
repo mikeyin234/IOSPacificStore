@@ -420,7 +420,8 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
             break;
         case DELETE_ME:
             
-            ShowAlertControlDelete(Message: "確定要刪除會員帳號嗎？");
+            ShowAlertControlDelete(Message: "一旦刪除APP會員帳號資格，您將無法繼續享有APP所有功能及會員優惠，且之前所有累積的會員點數、抵用券、優惠券將全部失效，期間所有消費紀錄亦無法保留，請您再次確認是否要刪除會員帳號？");
+            
             
             break;
         case LOGOUT:
@@ -482,9 +483,7 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
            = StoryBoard.instantiateViewController(withIdentifier: "MainGame")
         
         self.navigationController?.pushViewController(btMainGame, animated: true)
-        
     }
-    
     
     
     func  Logout(IsDirectLogout:Bool)
@@ -492,15 +491,20 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
         
         if(IsDirectLogout)
         {
-            if(ConfigInfo.m_bMemberLogin)
-            {
+            //if(ConfigInfo.m_bMemberLogin)
+            //{
+                
                 ConfigInfo.m_bMemberLogin = false;
+                
                 self.ResetUserLoginInfo();
+                
                 let  StoryBoard = UIStoryboard(name: "Main" , bundle: nil)
+                
                 let  btLoginBoard
                     = StoryBoard.instantiateViewController(withIdentifier: "Login");
-                self.navigationController?.replaceTopViewController(with: btLoginBoard, animated: true)
-            }
+            
+                self.navigationController?.replaceTopViewController(with: btLoginBoard, animated: false)
+           // }
         }else
         {
             let alert = UIAlertController(title: "系統資訊", message: "確定要登出嗎？", preferredStyle: .alert)
@@ -773,7 +777,7 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
         
         // 1. 設定靠左對齊的段落樣式
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
+        paragraphStyle.alignment = .left
 
         // 2. 建立帶有樣式的 attributedString
         let messageText = NSAttributedString(
@@ -1007,7 +1011,8 @@ class MemberCenterViewController: BaseViewController ,UITableViewDataSource, UIT
            {
                let  dic   =  userInfo?.object(forKey: "data") as! NSDictionary;
                let  strCode = dic.object(forKey: "ReturnCode") as! String;
-               ConfigInfo.m_gameInfo.iGameStartType = Int(strCode)!;
+               
+               
                if(Int(strCode) == 0)
                {
                    //刪除成功
